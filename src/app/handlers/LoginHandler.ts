@@ -5,7 +5,6 @@ import { HTTP_CODES, HTTP_METHODS } from "../model/ServerModel";
 import { getRequestBody } from "../utils/Utils";
 
 export class LoginHandler {
-
   private request: IncomingMessage;
   private response: ServerResponse;
   private authorizer: Authorizer;
@@ -18,14 +17,14 @@ export class LoginHandler {
 
   public async handleRequest() {
     switch (this.request.method) {
-        case HTTP_METHODS.POST:
-            await this.handlePost();
-            break;
-        default:
-            break;
+      case HTTP_METHODS.POST:
+        await this.handlePost();
+        break;
+      default:
+          break;
     }
   }
-  
+
   private async handlePost(){
     const requestBody: Account = await getRequestBody(this.request);
     if(requestBody.userName && requestBody.password) {
