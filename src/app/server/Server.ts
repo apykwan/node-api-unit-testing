@@ -13,11 +13,10 @@ export class Server {
 
   public async startServer() {
     this.server = createServer(async (req, res) => {
-        console.log(`Got request from ${req.headers['user-agent']}`);
-        console.log(`Got request for ${req.url}`);
-        await this.handleRequest(req, res);
-        res.end();
-
+      console.log(`Got request from ${req.headers['user-agent']}`);
+      console.log(`Got request for ${req.url}`);
+      await this.handleRequest(req, res);
+      res.end();
     });
     this.server.listen(8080);
     console.log('server started')
@@ -56,16 +55,17 @@ export class Server {
   public async stopServer() {
     if (this.server) {
       console.log('closing server');
-      return new Promise<void>((resolve, reject) => {
-          this.server!.close((err) => {
-              if (err) {
-                  reject(err);
-              } else {
-                  console.log('server closed');
-                  resolve();
-              }
-          });
-      });
+      this.server.close();
+      // return new Promise<void>((resolve, reject) => {
+      //     this.server!.close((err) => {
+      //         if (err) {
+      //             reject(err);
+      //         } else {
+      //             console.log('server closed');
+      //             resolve();
+      //         }
+      //     });
+      // });
     }
   }
 }

@@ -3,6 +3,7 @@ import { ReservationsDataAccess } from '../../app/data/ReservationsDataAccess';
 import { LoginHandler } from '../../app/handlers/LoginHandler';
 import { RegisterHandler } from '../../app/handlers/RegisterHandler';
 import { ReservationsHandler } from '../../app/handlers/ReservationsHandler';
+import { HTTP_CODES } from "../../app/model/ServerModel";
 import { Server } from '../../app/server/Server';
 
 jest.mock('../../app/auth/Authorizer');
@@ -90,16 +91,31 @@ describe('Server test suite', () => {
   });
 
   it('should do nothing for not supported route', async () => {
-    requestMock.url = 'localhost:8080/reservation';
-    const handleRequestSpy = jest.spyOn(ReservationsHandler.prototype, 'handleRequest');
+    requestMock.url = 'localhost:8080/random-route';
+    const validateTokenSpy = jest.spyOn(Authorizer.prototype, 'validateToken');
     await sut.startServer();
 
-    expect(handleRequestSpy).toHaveBeenCalledTimes(1);
-    expect(ReservationsHandler).toHaveBeenCalledWith(
-      requestMock, 
-      responseMock, 
-      expect.any(Authorizer),
-      expect.any(ReservationsDataAccess) 
+    expect(validateTokenSpy).not.toHaveBeenCalled();
+  });
+
+  it('should handle errors in serving requests', async () => {
+    requestMock.url = 'localhost:8080/reservation';
+    const handleRequestSpy = jest.spyOn(ReservationsHandler.prototype, 'handleRequest');
+    handleRequestSpy.mockRejectedValueOnce(new Error('Some Error'));
+
+    await sut.startServer();
+
+    expect(responseMock.writeHead).toHaveBeenCalledWith(
+      HTTP_CODES.INTERNAL_SERVER_ERROR,
+      JSON.stringify(`Internal server error: Some Error`)
     );
+  });
+
+  it('should stop the server if started',async ()=>{
+    await sut.startServer();
+
+    await sut.stopServer();
+
+    expect(serverMock.close).toHaveBeenCalledTimes(1);
   });
 });

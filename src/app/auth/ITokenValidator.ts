@@ -1,7 +1,5 @@
 
 
 export interface ITokenValidator {
-
-    validateToken(tokenId: string): Promise<boolean>
-
+  validateToken(tokenId: string): Promise<boolean>
 }
