@@ -10,9 +10,9 @@ jest.mock('../../app/data/SessionTokenDataAccess', () => {
   return {
     SessionTokenDataAccess: jest.fn().mockImplementation(() => {
       return {
-          isValidToken: isValidTokenMock,
-          generateToken: generateTokenMock,
-          invalidateToken: invalidateTokenMock
+        isValidToken: isValidTokenMock,
+        generateToken: generateTokenMock,
+        invalidateToken: invalidateTokenMock
       }
     })
   }
@@ -25,8 +25,8 @@ jest.mock('../../app/data/UserCredentialsDataAccess', () => {
   return {
     UserCredentialsDataAccess: jest.fn().mockImplementation(() => {
         return {
-            addUser: addUserMock,
-            getUserByUserName: getUserByUserNameMock
+          addUser: addUserMock,
+          getUserByUserName: getUserByUserNameMock
         }
     })
   }
@@ -64,15 +64,15 @@ describe('Authorizer test suite', () => {
 
     expect(actual).toBe(someId);
     expect(addUserMock).toHaveBeenCalledWith({
-        id: '',
-        password: somePassword,
-        userName: someUserName
+      id: '',
+      password: somePassword,
+      userName: someUserName
     });
   });
 
   it('should return tokenId for valid credentials', async () => {
     getUserByUserNameMock.mockResolvedValueOnce({
-        password: somePassword
+      password: somePassword
     })
     generateTokenMock.mockResolvedValueOnce(someId);
 
@@ -95,7 +95,7 @@ describe('Authorizer test suite', () => {
   it('should invalidate token on logout call', async () => {
     await sut.logout(someId);
 
-    expect(invalidateTokenMock).toBeCalledWith(someId);
-});
+    expect(invalidateTokenMock).toHaveBeenCalledWith(someId);
+  });
 
 });

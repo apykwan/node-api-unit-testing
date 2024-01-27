@@ -29,7 +29,7 @@ describe('DataBase test suite', () => {
 
   });
 
-  it('Should return id after inset', async () => {
+  it('Should return id after insert', async () => {
     const actual = await sut.insert({
       id: '',
     } as any);
@@ -37,7 +37,7 @@ describe('DataBase test suite', () => {
     expect(actual).toBe(fakeId);
   });
 
-  it('should get element after inset', async () => {
+  it('should get element after insert', async () => {
     const id = await sut.insert(someObject1);
     const actual = await sut.getBy('id', id);
 
