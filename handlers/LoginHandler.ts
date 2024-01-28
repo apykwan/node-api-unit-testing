@@ -41,7 +41,7 @@ export class LoginHandler {
               this.response.writeHead(HTTP_CODES.CREATED, { 'Content-Type': 'application/json' });
               this.response.write(JSON.stringify({token}));
           } else {
-              this.response.statusCode = HTTP_CODES.NOT_fOUND;
+              this.response.statusCode = HTTP_CODES.NOT_FOUND;
               this.response.write(JSON.stringify('wrong username or password'));
           }
           return;

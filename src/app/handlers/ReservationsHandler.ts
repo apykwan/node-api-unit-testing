@@ -90,8 +90,8 @@ export class ReservationsHandler {
           this.response.writeHead(HTTP_CODES.OK, { 'Content-Type': 'application/json' });
           this.response.write(JSON.stringify(reservation));
       } else {
-          this.response.statusCode = HTTP_CODES.NOT_fOUND;
-          this.response.write(JSON.stringify(`Reservation with id ${id} not found`));
+          this.response.statusCode = HTTP_CODES.NOT_FOUND;
+          this.response.write(JSON.stringify(`Reservation with id ${id} not FOUND`));
       }
     } else {
       this.response.statusCode = HTTP_CODES.BAD_REQUEST;
@@ -124,8 +124,8 @@ export class ReservationsHandler {
                   ));
               }
           } else {
-              this.response.statusCode = HTTP_CODES.NOT_fOUND;
-              this.response.write(JSON.stringify(`Reservation with id ${id} not found`));
+              this.response.statusCode = HTTP_CODES.NOT_FOUND;
+              this.response.write(JSON.stringify(`Reservation with id ${id} not FOUND`));
           }
       } else {
           this.response.statusCode = HTTP_CODES.BAD_REQUEST;
