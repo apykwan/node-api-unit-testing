@@ -5,7 +5,7 @@ import { Account } from '../../app/model/AuthModel';
 const insertMock = jest.fn();
 const getByMock = jest.fn();
 
-jest.mock('../../app/data/Database', () => {
+jest.mock('../../app/data/DataBase', () => {
   return {
     DataBase: jest.fn().mockImplementation(() => {
       return {
