@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --forceExit",
+    "itest": "jest --config itest.config.ts",
     "start": "nodemon src/app/Launcher.ts"
   },
   "keywords": [],
